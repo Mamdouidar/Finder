@@ -37,4 +37,24 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function setPasswordAttribute($password)
+    {
+        $this->attributes['password'] = bcrypt($password);
+    }
+
+    public function report()
+    {
+        return $this->hasMany(Report::class);
+    }
+
+    public function unreportedIncident()
+    {
+        return $this->hasMany(UnreportedIncident::class);
+    }
+
+    public function familyMember()
+    {
+        return $this->hasMany(FamilyMember::class);
+    }
 }
