@@ -16,9 +16,15 @@ class UserFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
+            'national_id' => $this->faker->unique()->randomNumber(),
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'password' => 'password',
+            'address' => $this->faker->address(),
+            'phone_number' => $this->faker->phoneNumber(),
+            'gender' => $this->faker->randomElements(['male', 'female'])[0],
+            'picture' => 'https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1631&q=80',
+            'is_admin' => false,
             'remember_token' => Str::random(10),
         ];
     }
