@@ -26,4 +26,24 @@ class AuthController extends Controller
 
         return "Successful";
     }
+
+    public function login(Request $request)
+    {
+        $attributes = $request->validate([
+            'national_id' => ['required', Rule::exists('users', 'national_id')],
+            'password' => ['required']
+        ]);
+
+        if(auth()->attempt($attributes)) {
+            return response('Logged in', 200);
+        }
+
+        return response('Login Failed', 403);
+    }
+
+    public function logout()
+    {
+        auth()->logout();
+        return response('Logged out', 200);
+    }
 }
