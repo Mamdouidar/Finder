@@ -21,7 +21,7 @@ class CreateFamilyMembersTable extends Migration
             $table->string('age');
             $table->string('gender');
             $table->string('picture');
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });
     }

@@ -19,7 +19,7 @@ class CreateUnreportedIncidentsTable extends Migration
             $table->string('gender');
             $table->string('police_station');
             $table->string('picture');
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
         });
     }

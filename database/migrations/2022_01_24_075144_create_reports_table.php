@@ -23,7 +23,7 @@ class CreateReportsTable extends Migration
             $table->string('picture');
             $table->string('clothes_last_seen_wearing')->nullable();
             $table->string('birthmark')->nullable();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });
     }
