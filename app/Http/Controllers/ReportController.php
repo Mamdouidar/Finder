@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Report;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class ReportController extends Controller
 {
@@ -25,7 +26,22 @@ class ReportController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $attributes = $request->validate([
+            'name' => ['required', 'max:255', 'min:3'],
+            'national_id' => ['required', Rule::unique('reports', 'national_id')],
+            'age' => ['required'],
+            'area' => ['required'],
+            'gender' => ['required'],
+            'clothes_last_seen_wearing',
+            'birthmark'            
+        ]);
+
+        $attributes['picture'] = 'https://images.unsplash.com/photo-1592479950461-2c8ef29f2a14?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80';
+        $attributes['user_id'] = 4;
+
+        Report::create($attributes);
+
+        return "successful";
     }
 
     /**
@@ -46,9 +62,24 @@ class ReportController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Report $report)
     {
-        //
+        $attributes = $request->validate([
+            'name' => ['required', 'max:255', 'min:3'],
+            'national_id' => ['required', Rule::unique('reports', 'national_id')->ignore($report->id)],
+            'age' => ['required'],
+            'area' => ['required'],
+            'gender' => ['required'],
+            'clothes_last_seen_wearing',
+            'birthmark'            
+        ]);
+
+        $attributes['picture'] = 'https://images.unsplash.com/photo-1592479950461-2c8ef29f2a14?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80';
+        $attributes['user_id'] = 4;
+
+        $report->update($attributes);
+
+        return response()->json($report);
     }
 
     /**
