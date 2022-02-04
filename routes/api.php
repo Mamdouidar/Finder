@@ -23,7 +23,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout']);
 
 
-Route::apiResource('/users', UserController::class)->only(['update', 'destroy', 'show']);
+Route::apiResource('/users', UserController::class)->except('store');
 Route::apiResource('/reports', ReportController::class);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
