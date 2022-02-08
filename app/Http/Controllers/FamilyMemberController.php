@@ -31,11 +31,16 @@ class FamilyMemberController extends Controller
             'name' => ['required'],
             'national_id' => ['required', Rule::unique('family_members', 'national_id')],
             'age' => ['required'],
-            'gender' => ['required']
+            'gender' => ['required'],
+            'picture' => ['required', 'image']
         ]);
 
-        $attributes['picture'] = 'https://images.unsplash.com/photo-1592479950461-2c8ef29f2a14?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80';
         $attributes['user_id'] = 7;
+
+        $file = $request->file('picture');
+        $name = '/pictures/' . uniqid() . '.' . $file->extension();
+        $file->storePubliclyAs('public', $name);
+        $attributes['picture'] = $name;
 
         FamilyMember::create($attributes);
 
@@ -67,11 +72,16 @@ class FamilyMemberController extends Controller
             'name' => ['required'],
             'national_id' => ['required', Rule::unique('family_members', 'national_id')->ignore($familymember->id)],
             'age' => ['required'],
-            'gender' => ['required']
+            'gender' => ['required'],
+            'picture' => ['required', 'image']
         ]);
 
-        $attributes['picture'] = 'https://images.unsplash.com/photo-1592479950461-2c8ef29f2a14?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80';
         $attributes['user_id'] = 7;
+
+        $file = $request->file('picture');
+        $name = '/pictures/' . uniqid() . '.' . $file->extension();
+        $file->storePubliclyAs('public', $name);
+        $attributes['picture'] = $name;
 
         $familymember->update($attributes);
 
