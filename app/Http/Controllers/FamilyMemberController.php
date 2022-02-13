@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\FamilyMemberResource;
 use App\Models\FamilyMember;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -15,7 +16,7 @@ class FamilyMemberController extends Controller
      */
     public function index()
     {
-        return response()->json(FamilyMember::all());
+        return FamilyMemberResource::collection(FamilyMember::all());
     }
 
     /**
@@ -55,7 +56,7 @@ class FamilyMemberController extends Controller
      */
     public function show(FamilyMember $familymember)
     {
-        return response()->json($familymember);
+        return new FamilyMemberResource($familymember);
     }
 
     /**
@@ -85,7 +86,7 @@ class FamilyMemberController extends Controller
 
         $familymember->update($attributes);
 
-        return response()->json($familymember);
+        return new FamilyMemberResource($familymember);
     }
 
     /**
