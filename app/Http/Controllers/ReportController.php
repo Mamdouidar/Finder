@@ -29,7 +29,7 @@ class ReportController extends Controller
     {
         $attributes = $request->validate([
             'name' => ['required', 'max:255', 'min:3'],
-            'national_id' => ['required', Rule::unique('reports', 'national_id')],
+            'national_id' => ['required', 'numeric', 'digits:14', Rule::unique('reports', 'national_id')],
             'age' => ['required'],
             'area' => ['required'],
             'gender' => ['required'],
@@ -72,7 +72,7 @@ class ReportController extends Controller
     {
         $attributes = $request->validate([
             'name' => ['required', 'max:255', 'min:3'],
-            'national_id' => ['required', Rule::unique('reports', 'national_id')->ignore($report->id)],
+            'national_id' => ['required', 'numeric', 'digits:14', Rule::unique('reports', 'national_id')->ignore($report->id)],
             'age' => ['required'],
             'area' => ['required'],
             'gender' => ['required'],

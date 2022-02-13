@@ -30,7 +30,7 @@ class FamilyMemberController extends Controller
         $attributes = $request->validate([
             'relation' => ['required'],
             'name' => ['required'],
-            'national_id' => ['required', Rule::unique('family_members', 'national_id')],
+            'national_id' => ['required', 'numeric', 'digits:14', Rule::unique('family_members', 'national_id')],
             'age' => ['required'],
             'gender' => ['required'],
             'picture' => ['required', 'image']
@@ -71,7 +71,7 @@ class FamilyMemberController extends Controller
         $attributes = $request->validate([
             'relation' => ['required'],
             'name' => ['required'],
-            'national_id' => ['required', Rule::unique('family_members', 'national_id')->ignore($familymember->id)],
+            'national_id' => ['required', 'numeric', 'digits:14', Rule::unique('family_members', 'national_id')->ignore($familymember->id)],
             'age' => ['required'],
             'gender' => ['required'],
             'picture' => ['required', 'image']

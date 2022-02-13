@@ -54,7 +54,7 @@ class UserController extends Controller
     {
         $attributes = $request->validate([
             'name' => ['required', 'max:255', 'min:3'],
-            'national_id' => ['required', Rule::unique('users', 'national_id')->ignore($user->id)],
+            'national_id' => ['required', 'numeric', 'digits:14', Rule::unique('users', 'national_id')->ignore($user->id)],
             'email' => ['required', 'email', 'max:255', 'min:3', Rule::unique('users', 'email')->ignore($user->id)],
             'password' => ['required', 'max:16', 'min:6'],
             'address' => ['required'],
