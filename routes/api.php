@@ -23,15 +23,21 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
-Route::post('/logout', [AuthController::class, 'logout']);
 
-
-Route::apiResource('/users', UserController::class)->except('store');
-Route::apiResource('/reports', ReportController::class);
-Route::apiResource('/unreportedincidents', UnreportedIncidentController::class);
-Route::apiResource('/familymembers', FamilyMemberController::class);
+Route::apiResource('/reports', ReportController::class)->only(['index', 'show']);
+Route::apiResource('/unreportedincidents', UnreportedIncidentController::class)->only(['index', 'show']);
 
 Route::get('/search', [SearchController::class, 'search']);
+
+
+Route::group(['middleware' => 'auth:sanctum'], function(){
+    Route::apiResource('/users', UserController::class)->except('store');
+    Route::apiResource('/reports', ReportController::class)->except(['index', 'show']);
+    Route::apiResource('/unreportedincidents', UnreportedIncidentController::class)->except(['index', 'show']);
+    Route::apiResource('/familymembers', FamilyMemberController::class);
+    Route::post('/logout', [AuthController::class, 'logout']);    
+});
+
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

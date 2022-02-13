@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\ReportResource;
 use App\Models\Report;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class ReportController extends Controller
@@ -38,7 +39,7 @@ class ReportController extends Controller
             'birthmark'            
         ]);
 
-        $attributes['user_id'] = 4;
+        $attributes['user_id'] = Auth::user()->id;
 
         $file = $request->file('picture');
         $name = '/pictures/' . uniqid() . '.' . $file->extension();

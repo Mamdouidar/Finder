@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\UnreportedIncidentResource;
 use App\Models\UnreportedIncident;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UnreportedIncidentController extends Controller
 {
@@ -72,7 +73,7 @@ class UnreportedIncidentController extends Controller
             'picture' => ['required', 'image']
         ]);
 
-        $attributes['user_id'] = 3;
+        $attributes['user_id'] = Auth::user()->id;
 
         $file = $request->file('picture');
         $name = '/pictures/' . uniqid() . '.' . $file->extension();

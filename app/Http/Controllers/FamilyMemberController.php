@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\FamilyMemberResource;
 use App\Models\FamilyMember;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class FamilyMemberController extends Controller
@@ -36,7 +37,7 @@ class FamilyMemberController extends Controller
             'picture' => ['required', 'image']
         ]);
 
-        $attributes['user_id'] = 7;
+        $attributes['user_id'] = Auth::user()->id;
 
         $file = $request->file('picture');
         $name = '/pictures/' . uniqid() . '.' . $file->extension();

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class AuthController extends Controller
@@ -39,16 +40,23 @@ class AuthController extends Controller
             'password' => ['required']
         ]);
 
-        if(auth()->attempt($attributes)) {
-            return response('Logged in', 200);
+        if(!auth()->attempt($attributes)) {
+            return response('Login Failed', 403);
         }
 
-        return response('Login Failed', 403);
+        $user = User::where('national_id', $request->national_id)->first();
+        $authToken = $user->createToken('auth-token')->plainTextToken;
+
+        return response()->json([
+            'access_token' => $authToken
+        ]);
+
+        
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
-        auth()->logout();
+        $request->user()->currentAccessToken()->delete();
         return response('Logged out', 200);
     }
 }
