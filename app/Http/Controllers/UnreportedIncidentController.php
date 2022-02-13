@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UnreportedIncidentResource;
 use App\Models\UnreportedIncident;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,7 @@ class UnreportedIncidentController extends Controller
      */
     public function index()
     {
-        return response()->json(UnreportedIncident::all());
+        return UnreportedIncidentResource::collection(UnreportedIncident::all());
     }
 
     /**
@@ -52,7 +53,7 @@ class UnreportedIncidentController extends Controller
      */
     public function show(UnreportedIncident $unreportedincident)
     {
-        return response()->json($unreportedincident);
+        return new UnreportedIncidentResource($unreportedincident);
     }
 
     /**
@@ -80,7 +81,7 @@ class UnreportedIncidentController extends Controller
 
         $unreportedincident->update($attributes);
 
-        return response()->json($unreportedincident);
+        return new UnreportedIncidentResource($unreportedincident);
     }
 
     /**
