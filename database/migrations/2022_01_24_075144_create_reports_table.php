@@ -16,7 +16,7 @@ class CreateReportsTable extends Migration
         Schema::create('reports', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('national_id')->unique();
+            $table->bigInteger('national_id')->unique();
             $table->string('age');
             $table->string('area');
             $table->string('gender');

@@ -17,7 +17,7 @@ class CreateFamilyMembersTable extends Migration
             $table->id();
             $table->string('relation');
             $table->string('name');
-            $table->integer('national_id')->unique();
+            $table->bigInteger('national_id')->unique();
             $table->string('age');
             $table->string('gender');
             $table->string('picture');

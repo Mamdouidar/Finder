@@ -12,7 +12,7 @@ class AuthController extends Controller
     {
         $attributes = $request->validate([
             'name' => ['required', 'max:255', 'min:3'],
-            'national_id' => ['required', Rule::unique('users', 'national_id')],
+            'national_id' => ['required',  Rule::unique('users', 'national_id')],
             'email' => ['required', 'email', 'max:255', 'min:3', Rule::unique('users', 'email')],
             'password' => ['required', 'max:16', 'min:6'],
             'address' => ['required'],
