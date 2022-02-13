@@ -35,7 +35,7 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $attributes = $request->validate([
-            'national_id' => ['required','numeric', 'digits:14', Rule::exists('users', 'national_id')],
+            'national_id' => ['required', 'numeric', 'digits:14', Rule::exists('users', 'national_id')],
             'password' => ['required']
         ]);
 
