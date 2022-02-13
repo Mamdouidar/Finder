@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ReportResource;
 use App\Models\Report;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -15,7 +16,7 @@ class ReportController extends Controller
      */
     public function index()
     {
-        return response()->json(Report::all());
+        return ReportResource::collection(Report::all());
     }
 
     /**
@@ -57,7 +58,7 @@ class ReportController extends Controller
      */
     public function show(Report $report)
     {
-        return response()->json($report);
+        return new ReportResource($report);
     }
 
     /**
@@ -89,7 +90,7 @@ class ReportController extends Controller
 
         $report->update($attributes);
 
-        return response()->json($report);
+        return new ReportResource($report);
     }
 
     /**
