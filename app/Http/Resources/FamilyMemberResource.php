@@ -24,7 +24,7 @@ class FamilyMemberResource extends JsonResource
                 'age' => $this->age,
                 'gender' => $this->gender,
                 'picture' => $this->picture,
-                'picture_url' => env('APP_URL') . $this->picture,
+                'picture_url' => env('APP_URL') . 'storage' . $this->picture,
                 'user_id' => $this->user_id,
                 'created_at' => $this->created_at->diffForHumans()
             ]

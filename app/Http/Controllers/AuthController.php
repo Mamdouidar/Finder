@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -28,9 +29,9 @@ class AuthController extends Controller
         $file->storePubliclyAs('public', $name);
         $attributes['picture'] = $name;
 
-        User::create($attributes);
+        $user = User::create($attributes);
 
-        return "Successful";
+        return new UserResource($user);
     }
 
     public function login(Request $request)
