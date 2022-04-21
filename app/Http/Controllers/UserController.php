@@ -71,7 +71,11 @@ class UserController extends Controller
 
         $user->update($attributes);
 
-        return new UserResource($user);
+        return response()->json([
+            'message' => 'Account has been updated',
+            'status_code' =>200,
+            'user' => new UserResource($user)
+        ]);
     }
 
     /**
@@ -83,6 +87,6 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $user->delete();
-        return response(null, 204);
+        return response('User Deleted', 204);
     }
 }

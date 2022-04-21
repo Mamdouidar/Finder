@@ -41,9 +41,13 @@ class UnreportedIncidentController extends Controller
         $file->storePubliclyAs('public', $name);
         $attributes['picture'] = $name;
 
-        UnreportedIncident::create($attributes);
+        $unreportedincident = UnreportedIncident::create($attributes);
 
-        return "successful";
+        return response()->json([
+            'message' => 'Incident has been created',
+            'status_code' =>200,
+            'unreported_incident' => new UnreportedIncidentResource($unreportedincident)
+        ]);
     }
 
     /**
@@ -82,7 +86,11 @@ class UnreportedIncidentController extends Controller
 
         $unreportedincident->update($attributes);
 
-        return new UnreportedIncidentResource($unreportedincident);
+        return response()->json([
+            'message' => 'Incident has been updated',
+            'status_code' =>200,
+            'unreported_incident' => new UnreportedIncidentResource($unreportedincident)
+        ]);
     }
 
     /**
@@ -94,6 +102,6 @@ class UnreportedIncidentController extends Controller
     public function destroy(UnreportedIncident $unreportedincident)
     {
         $unreportedincident->delete();
-        return response(null, 204);
+        return response('Incident Deleted', 204);
     }
 }

@@ -46,9 +46,13 @@ class ReportController extends Controller
         $file->storePubliclyAs('public', $name);
         $attributes['picture'] = $name;
 
-        Report::create($attributes);
+        $report = Report::create($attributes);
 
-        return "successful";
+        return response()->json([
+            'message' => 'Report has been added',
+            'status_code' =>200,
+            'report' => new ReportResource($report)
+        ]);
     }
 
     /**
@@ -91,7 +95,11 @@ class ReportController extends Controller
 
         $report->update($attributes);
 
-        return new ReportResource($report);
+        return response()->json([
+            'message' => 'Report has been updated',
+            'status_code' =>200,
+            'report' => new ReportResource($report)
+        ]);
     }
 
     /**
@@ -103,6 +111,6 @@ class ReportController extends Controller
     public function destroy(Report $report)
     {
         $report->delete();
-        return response(null, 204);
+        return response('Report deleted', 204);
     }
 }

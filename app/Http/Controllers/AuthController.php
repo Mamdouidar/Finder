@@ -31,7 +31,11 @@ class AuthController extends Controller
 
         $user = User::create($attributes);
 
-        return new UserResource($user);
+        return response()->json([
+            'message' => 'Account has been created',
+            'status_code' =>200,
+            'user' => new UserResource($user)
+        ]);
     }
 
     public function login(Request $request)
@@ -42,14 +46,17 @@ class AuthController extends Controller
         ]);
 
         if(!auth()->attempt($attributes)) {
-            return response('Login Failed', 403);
+            return response('Login Failed', 401);
         }
 
         $user = User::where('national_id', $request->national_id)->first();
         $authToken = $user->createToken('auth-token')->plainTextToken;
 
         return response()->json([
-            'access_token' => $authToken
+            'access_token' => $authToken,
+            'message' => 'Logged in',
+            'status_code' =>200,
+            'user' => new UserResource($user)
         ]);
 
         

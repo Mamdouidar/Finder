@@ -44,9 +44,13 @@ class FamilyMemberController extends Controller
         $file->storePubliclyAs('public', $name);
         $attributes['picture'] = $name;
 
-        FamilyMember::create($attributes);
+        $familymember = FamilyMember::create($attributes);
 
-        return "successful";
+        return response()->json([
+            'message' => 'Family Member has been added',
+            'status_code' =>200,
+            'family_member' => new FamilyMemberResource($familymember)
+        ]);
     }
 
     /**
@@ -87,7 +91,11 @@ class FamilyMemberController extends Controller
 
         $familymember->update($attributes);
 
-        return new FamilyMemberResource($familymember);
+        return response()->json([
+            'message' => 'Family Member has been updated',
+            'status_code' =>200,
+            'family_member' => new FamilyMemberResource($familymember)
+        ]);
     }
 
     /**
@@ -99,6 +107,6 @@ class FamilyMemberController extends Controller
     public function destroy(FamilyMember $familymember)
     {
         $familymember->delete();
-        return response(null, 204);
+        return response('Family member deleted', 204);
     }
 }
