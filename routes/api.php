@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AiController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FamilyMemberController;
 use App\Http\Controllers\ReportController;
@@ -28,6 +29,9 @@ Route::apiResource('/reports', ReportController::class)->only(['index', 'show'])
 Route::apiResource('/unreportedincidents', UnreportedIncidentController::class)->only(['index', 'show']);
 
 Route::get('/search', [SearchController::class, 'search']);
+
+Route::get('/ai', [AiController::class, 'index']);
+Route::post('/ai', [AiController::class, 'store']);
 
 
 Route::group(['middleware' => 'auth:sanctum'], function(){

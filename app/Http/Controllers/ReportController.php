@@ -35,8 +35,8 @@ class ReportController extends Controller
             'area' => ['required'],
             'gender' => ['required'],
             'picture' => ['required', 'image'],
-            'clothes_last_seen_wearing',
-            'birthmark'            
+            'clothes_last_seen_wearing' => ['required'],
+            'birthmark' => ['required']           
         ]);
 
         $attributes['user_id'] = Auth::user()->id;
@@ -82,8 +82,8 @@ class ReportController extends Controller
             'area' => ['required'],
             'gender' => ['required'],
             'picture' => ['required', 'image'],
-            'clothes_last_seen_wearing',
-            'birthmark'        
+            'clothes_last_seen_wearing' => ['required'],
+            'birthmark' => ['required']       
         ]);
 
         $attributes['user_id'] = 4;

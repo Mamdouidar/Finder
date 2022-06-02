@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
@@ -46,7 +47,9 @@ class AuthController extends Controller
         ]);
 
         if(!auth()->attempt($attributes)) {
-            return response('Login Failed', 401);
+            return response()->json([
+                'error' => throw ValidationException::withMessages(['Wrong User Information']),
+            ]);
         }
 
         $user = User::where('national_id', $request->national_id)->first();
@@ -65,6 +68,9 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
-        return response('Logged out', 200);
+        return response()->json([
+            'message' => 'Logged out successfully',
+            'status_code' => 200
+        ]);
     }
 }
