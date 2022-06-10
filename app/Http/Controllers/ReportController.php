@@ -86,7 +86,7 @@ class ReportController extends Controller
             'birthmark' => ['required']       
         ]);
 
-        $attributes['user_id'] = 4;
+        $attributes['user_id'] = Auth::user()->id;
 
         $file = $request->file('picture');
         $name = '/pictures/' . uniqid() . '.' . $file->extension();

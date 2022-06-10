@@ -34,7 +34,7 @@ class UnreportedIncidentController extends Controller
             'picture' => ['required', 'image']
         ]);
 
-        $attributes['user_id'] = 3;
+        $attributes['user_id'] = Auth::user()->id;
 
         $file = $request->file('picture');
         $name = '/pictures/' . uniqid() . '.' . $file->extension();
