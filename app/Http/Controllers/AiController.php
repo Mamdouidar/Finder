@@ -5,16 +5,28 @@ namespace App\Http\Controllers;
 use App\Http\Resources\AiResource;
 use App\Models\Ai;
 use Illuminate\Http\Request;
+use Symfony\Component\Process\Process;
+use Symfony\Component\Process\Exception\ProcessFailedException;
 
 class AiController extends Controller
 {
     public function index()
     {
-        return AiResource::collection(Ai::all());
+        //return AiResource::collection(Ai::all());
+        $python =  "C:\Users\mamdo\AppData\Local\Programs\Python\Python39\python";
+        $path = app_path(). "\http\controllers\main.py";
+
+        $result = shell_exec($python." ".$path);
+        //$result = "python ". $path;
+
+        var_dump($result);
     }
 
     public function store(Request $request)
     {
+        $python =  "C:\Users\mamdo\AppData\Local\Programs\Python\Python39\python";
+        $path = app_path(). "\http\controllers\main.py";
+
         $attributes = $request->validate([
             'image' => ['required', 'image']
         ]);
@@ -25,5 +37,40 @@ class AiController extends Controller
         $attributes['image'] = $name;
 
         Ai::create($attributes);
+
+        /*
+        $process = new Process(['C:\Users\mamdo\AppData\Local\Programs\Python\Python39\python', 'P:/finder/sourcecode/main.py']);
+        $process->run();
+
+        if (!$process->isSuccessful()) {
+            throw new ProcessFailedException($process);
+        }
+
+        $output_data = $process->mustRun()->getOutput();
+
+        return response()->json([
+            'result' => $output_data
+        ]); 
+        */
+
+        $result = shell_exec($python." ".$path . escapeshellarg(" "));
+
+        //sleep(30);
+
+        return response()->json([
+            'result' => $result
+        ]);
+        
+        /*if ($result === True) {
+            return response()->json([
+                'result' => 'match found'
+            ]);
+        }
+
+        return response()->json([
+            'result' => 'not found'
+        ]);*/
+
+
     }
 }
