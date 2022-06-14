@@ -27,7 +27,11 @@ def matchImages():
 
     result = face_recognition.compare_faces(processed_pictures, img_encoding2);
 
-    print(True in result);
+    if True in result:
+        print("Match Found");
+    else:
+        print("No Match Found!");
+    #print(True in result);
 
 matchImages();
 

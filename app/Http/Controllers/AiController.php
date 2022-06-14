@@ -26,6 +26,7 @@ class AiController extends Controller
     {
         $python =  "C:\Users\mamdo\AppData\Local\Programs\Python\Python39\python";
         $path = app_path(). "\http\controllers\main.py";
+        $final_result = "";
 
         $attributes = $request->validate([
             'image' => ['required', 'image']
@@ -38,12 +39,10 @@ class AiController extends Controller
 
         Ai::create($attributes);
 
-        $result = shell_exec($python." ".$path . escapeshellarg(" "));
-
-        //sleep(30);
+        $result = shell_exec($python." ".$path . escapeshellarg(" "));        
 
         return response()->json([
-            'result' => $result
+            'result' => $result,
         ]);
         
         /*
