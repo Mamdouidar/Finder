@@ -38,6 +38,14 @@ class AiController extends Controller
 
         Ai::create($attributes);
 
+        $result = shell_exec($python." ".$path . escapeshellarg(" "));
+
+        //sleep(30);
+
+        return response()->json([
+            'result' => $result
+        ]);
+        
         /*
         $process = new Process(['C:\Users\mamdo\AppData\Local\Programs\Python\Python39\python', 'P:/finder/sourcecode/main.py']);
         $process->run();
@@ -52,25 +60,5 @@ class AiController extends Controller
             'result' => $output_data
         ]); 
         */
-
-        $result = shell_exec($python." ".$path . escapeshellarg(" "));
-
-        //sleep(30);
-
-        return response()->json([
-            'result' => $result
-        ]);
-        
-        /*if ($result === True) {
-            return response()->json([
-                'result' => 'match found'
-            ]);
-        }
-
-        return response()->json([
-            'result' => 'not found'
-        ]);*/
-
-
     }
 }
