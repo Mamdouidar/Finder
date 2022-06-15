@@ -39,10 +39,13 @@ class AiController extends Controller
 
         Ai::create($attributes);
 
-        $result = shell_exec($python." ".$path . escapeshellarg(" "));        
+        set_time_limit(300);
+
+        $result = shell_exec($python." ".$path . escapeshellarg(" ")); 
 
         return response()->json([
             'result' => $result,
+            'status_code' => 200
         ]);
         
         /*
